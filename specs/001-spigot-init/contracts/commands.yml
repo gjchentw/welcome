@@ -1,0 +1,25 @@
+# Commands Contract
+
+**Feature**: 初始化 Spigot 插件核心架構
+**Date**: 2026-02-15
+
+## 1. /wellcome (Base Command)
+
+### reload
+- **Description**: 重載所有設定檔 (config.yml, messages.yml)。
+- **Permission**: `wellcome.admin`
+- **Default Permission**: op
+- **Usage**: `/wellcome reload`
+- **Success Response**: `reload-success` (from messages.yml)
+- **Error Response**: `no-permission` (from messages.yml)
+
+### help
+- **Description**: 顯示指令列表與幫助訊息。
+- **Permission**: `wellcome.admin` (Basic help accessible to all? Spec says wellcome.admin. Let's stick to spec.)
+- **Default Permission**: op
+- **Usage**: `/wellcome help`
+- **Response**: `help-message` (from messages.yml)
+
+### invalid
+- **Description**: 處理未知子指令。
+- **Response**: Same as `help`.

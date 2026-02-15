@@ -1,0 +1,18 @@
+name: Wellcome
+version: '${version}'
+main: com.wellcome.WellcomePlugin
+api-version: 1.21
+authors: [YourName]
+description: A welcome plugin for your server.
+
+commands:
+  wellcome:
+    description: 主要管理指令
+    usage: /wellcome <reload|help>
+    permission: wellcome.use
+    aliases: [wc]
+
+permissions:
+  wellcome.admin:
+    description: 允許使用所有管理指令
+    default: op
