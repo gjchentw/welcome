@@ -20,7 +20,7 @@
 
 ### Decision: Standard Java Workflow
 - **Trigger**: 
-  - `push` branches: `[ "master" ]` -> 產生 `nightly-${hash}`
+  - `push` branches: `[ "main" ]` -> 產生 `nightly-${hash}`
   - `push` tags: `[ "v*" ]` -> 產生 Release
 - **Environment**: `ubuntu-latest`
 - **Steps**:

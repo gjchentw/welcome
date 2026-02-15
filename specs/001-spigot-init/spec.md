@@ -33,7 +33,7 @@
 **驗收場景 (Acceptance Scenarios)**:
 
 1.  **Given (已知)** 專案剛被 checkout 下來, **When (當)** 執行建置指令, **Then (則)** 應成功產出包含 plugin.yml 的 JAR 檔案。
-2.  **Given (已知)** 有新的 commit 被 push 到 master, **When (當)** GitHub Actions 觸發, **Then (則)** 應自動建置並上傳 `nightly-sha` 構建產物。
+2.  **Given (已知)** 有新的 commit 被 push 到 main, **When (當)** GitHub Actions 觸發, **Then (則)** 應自動建置並上傳 `nightly-sha` 構建產物。
 3.  **Given (已知)** 專案根目錄, **When (當)** 檢查檔案列表, **Then (則)** 應存在 LICENSE 檔案且內容為 MIT License。
 
 ---

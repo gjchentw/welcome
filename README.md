@@ -97,7 +97,7 @@ no-permission: "&c你沒有權限執行此指令！"
 ## CI/CD 狀態
 
 本專案採用 GitHub Actions 進行自動化建置：
-- **Nightly Build**: 每次 push 到 master 分支時觸發。
+- **Nightly Build**: 每次 push 到 main 分支時觸發。
 - **Release Build**: 每次建立 git tag (v*) 時觸發。
 
 ## 授權 (License)
