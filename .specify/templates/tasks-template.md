@@ -8,7 +8,7 @@ description: "Task list template for feature implementation"
 **Input**: Design documents from `/specs/[###-feature-name]/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
-**測試**: 根據專案憲法，測試是 **強制性的**，並且必須在實作之前撰寫 (測試優先原則)。下面的範例包含了測試任務，應根據此原則進行規劃。
+**測試**: 根據專案憲法，測試是 **強制性的**，並且必須在實作之前撰寫 (測試優先原則)。使用 **JUnit 5** 撰寫測試，並透過 `./gradlew test` 執行。下面的範例包含了測試任務，應根據此原則進行規劃。
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
@@ -49,8 +49,8 @@ description: "Task list template for feature implementation"
 **目的**: 初始化專案結構與基礎設定 (plugin.yml, Maven/Gradle)
 
 - [ ] T000 建立 `LICENSE` 檔案 (採用 MIT License)
-- [ ] T000b 建立基礎 `README.md` (含專案目的、開發環境、安裝配置)
-- [ ] T000c 設定 GitHub Actions Workflow (Push -> Nightly-${hash}, Tag -> Release)
+- [ ] T000b 建立基礎 `README.md` (含 Badge、專案目的、開發環境、安裝配置、開發流程-SDD)
+- [ ] T000c 設定 GitHub Actions Workflow (Push -> gradle test -> Nightly-${hash}, Tag -> Release)
 - [ ] T001 建立專案結構 (src/main/java, src/main/resources)
 - [ ] T002 初始化 [Maven/Gradle] 專案 (使用 JDK 25) 並加入 Spigot/Paper API 依賴
 - [ ] T003 [P] 設定 `plugin.yml` (main class, version, api-version)

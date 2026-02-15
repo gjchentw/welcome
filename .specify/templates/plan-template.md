@@ -18,6 +18,7 @@
 
 **Spigot/Paper 版本**: [例如：1.21+, 1.20.4 或 需要確認]
 **JDK 版本**: **Java 25 (必須/Required)** [最低編譯與執行需求]
+**Testing**: **JUnit 5** (透過 Gradle 執行) [必須]
 **主要相依性 (Dependencies)**: [例如：Vault, PlaceholderAPI, ProtocolLib, LuckPerms 或 無]
 **資料儲存 (Storage)**: [例如：config.yml, SQLite, MySQL, MongoDB 或 需要確認]
 **設定檔 (Configuration)**: [例如：config.yml, messages.yml, database.yml]
@@ -33,9 +34,10 @@
 *   [ ] **配置驅動**: 所有數值、訊息是否皆可透過 config.yml 修改？無 Hardcode？
 *   [ ] **權限控管**: 每個指令與功能是否都有規劃對應的 permission node？預設是否安全？
 *   [ ] **資源生命週期**: 是否有規劃 onDisable 的資源釋放邏輯 (取消 Task, 關閉連線)？
-*   [ ] **核心邏輯可測試**: 業務邏輯是否盡量抽離 Bukkit API，以便單元測試？
-*   [ ] **文件完整性**: 是否已規劃更新 README.md (包含專案目的、開發環境、安裝配置)？
+*   [ ] **核心邏輯可測試**: 業務邏輯是否盡量抽離 Bukkit API，並規劃使用 **JUnit** 與 **Gradle** 進行測試？
+*   [ ] **文件完整性**: 是否已規劃更新 README.md (包含專案目的、開發環境、安裝配置、**CI Status Badge**)？
 *   [ ] **CI/CD 設定**: 是否已規劃 GitHub Actions workflow (Push -> Nightly, Tag -> Release)？
+*   [ ] **規格驅動**: 是否已規劃更新 README.md 說明 Spec-Kit SDD 開發流程？
 
 ## Project Structure
 

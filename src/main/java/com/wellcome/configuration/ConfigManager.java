@@ -69,4 +69,12 @@ public class ConfigManager {
     public List<String> getMessageList(String key) {
         return messages.getStringList(key);
     }
+
+    public boolean isCheckWhitelist() {
+        return config.getBoolean("check-whitelist", true);
+    }
+
+    public boolean isBroadcastOnWhitelist() {
+        return config.getBoolean("broadcast-on-whitelist", true);
+    }
 }
