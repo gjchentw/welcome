@@ -2,6 +2,9 @@ plugins {
     id 'java'
 }
 
+sourceCompatibility = 25
+targetCompatibility = 25
+
 group = 'com.wellcome'
 version = '1.0.0-SNAPSHOT'
 
