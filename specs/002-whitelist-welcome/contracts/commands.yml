@@ -1,0 +1,25 @@
+# Command Contract: /wellcome
+
+## 語法
+`/wellcome <player_name>`
+
+## 指令流 (Command Flow)
+1. **驗證階段**:
+   - 檢查 `wellcome.use` 權限。
+   - 檢查 `Bukkit.hasWhitelist()`。若否且 `check-whitelist` 為 true，回傳 `whitelist-disabled`。
+   - 獲取 `OfflinePlayer target`。檢查是否有效。
+   - 檢查 `target.isWhitelisted()`。若是，回傳 `target-already-whitelisted`。
+2. **投票階段**:
+   - 檢查執行者是否已投票。若是，回傳 `already-voted`。
+   - 記錄投票。
+3. **結算階段**:
+   - 獲取線上人數 $N$。
+   - 獲取目前票數 $V$。
+   - 獲取 $P = \text{GameRule.PLAYERS\_SLEEPING\_PERCENTAGE}$。
+   - 計算門檻 $T = \lceil N \times (P/100) \rceil$。
+   - 若 $V \ge T$:
+     - `target.setWhitelisted(true)`。
+     - 廣播 `broadcast-message`。
+     - 清除該目標的投票紀錄。
+   - 若 $V < T$:
+     - 回傳 `welcome-success` (含當前/所需票數)。

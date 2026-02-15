@@ -1,5 +1,7 @@
 # Wellcome
 
+![Build Status](https://github.com/gjchentw/welcome/actions/workflows/ci.yml/badge.svg)
+
 Spigot 伺服器歡迎插件 (Welcome Plugin)
 
 ## 專案目的 (Project Purpose)
@@ -17,12 +19,21 @@ Spigot 伺服器歡迎插件 (Welcome Plugin)
 *   **API**: Paper API 1.21.4 (相容 Spigot)
 *   **IDE**: IntelliJ IDEA (推薦) 或 VS Code
 
+## 開發流程 (Development Workflow)
+
+本專案採用 **Spec-Kit** 進行 **規格驅動開發 (SDD)**。
+所有功能開發皆遵循以下流程：
+
+1.  **規格制定 (`/speckit.specify`)**: 定義使用者故事、需求與驗收標準。
+2.  **計畫擬定 (`/speckit.plan`)**: 進行技術研究、架構設計與任務拆解。
+3.  **實作執行 (`/speckit.implement`)**: 根據任務清單進行程式碼實作與測試。
+
 ### 快速開始
 
 1.  確認已安裝 JDK 25。
 2.  複製專案：
     ```bash
-    git clone https://github.com/your-repo/wellcome.git
+    git clone https://github.com/gjchentw/welcome.git
     cd wellcome
     ```
 3.  建置專案：
@@ -51,7 +62,25 @@ debug-mode: false
 
 # 訊息前綴 (支援 Hex Color)
 prefix: "&8[&bWellcome&8] "
+
+# 是否檢查目標玩家不在白名單中
+check-whitelist: true
+
+# 當玩家成功加入白名單時是否全服公告
+broadcast-on-whitelist: true
 ```
+
+## 功能使用 (Usage)
+
+### 投票加入白名單
+
+本插件允許線上玩家透過「歡迎」指令來投票決定是否將新玩家加入白名單。
+
+*   **指令**: `/wellcome <玩家名稱>`
+*   **機制**: 
+    1.  玩家輸入指令對目標投下一票。
+    2.  系統計算 `(目前票數 / 線上人數)` 的比例。
+    3.  若比例達到伺服器主世界的 `playersSleepingPercentage` 設定值 (GameRule)，目標將自動加入白名單並全服公告。
 
 #### messages.yml (訊息內容)
 
