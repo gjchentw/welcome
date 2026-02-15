@@ -1,0 +1,14 @@
+# Wellcome Plugin Configuration
+# Version: 1.0.0
+
+# Debug mode for more verbose logging
+debug-mode: false
+
+# Message prefix
+prefix: "&8[&bWellcome&8] "
+
+# Whether to check whitelist status
+check-whitelist: true
+
+# Whether to broadcast a message when a whitelisted player joins
+broadcast-on-whitelist: true
