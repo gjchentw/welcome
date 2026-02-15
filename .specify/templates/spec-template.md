@@ -5,77 +5,105 @@
 **Status**: Draft  
 **Input**: User description: "$ARGUMENTS"
 
-## User Scenarios & Testing *(mandatory)*
+**注意**: 本規格文件的所有內容都應遵循 `.specify/memory/constitution.md` 中定義的專案憲法原則。
+
+
+## 使用者情境與測試 (User Scenarios & Testing) *(必填)*
 
 <!--
-  IMPORTANT: User stories should be PRIORITIZED as user journeys ordered by importance.
-  Each user story/journey must be INDEPENDENTLY TESTABLE - meaning if you implement just ONE of them,
-  you should still have a viable MVP (Minimum Viable Product) that delivers value.
+  重要：使用者故事應根據重要性進行優先排序 (P1, P2, P3)。
+  每個使用者故事必須是 **可獨立測試的 (Independently Testable)**。
+  這意味著如果你只實作其中一個故事，你仍然應該擁有一個可交付價值的小型可行性產品 (MVP)。
   
-  Assign priorities (P1, P2, P3, etc.) to each story, where P1 is the most critical.
-  Think of each story as a standalone slice of functionality that can be:
-  - Developed independently
-  - Tested independently
-  - Deployed independently
-  - Demonstrated to users independently
+  將每個故事視為獨立的功能切片：
+  - 可獨立開發
+  - 可獨立測試 (無需依賴其他未完成的故事)
+  - 可獨立部署 (或透過設定檔開關控制)
 -->
 
-### User Story 1 - [Brief Title] (Priority: P1)
+### 使用者故事 1 - [簡短標題] (優先級: P1)
 
-[Describe this user journey in plain language]
+[請用平實語言描述此使用者旅程]
 
-**Why this priority**: [Explain the value and why it has this priority level]
+**優先級原因**: [解釋為何此故事最重要]
 
-**Independent Test**: [Describe how this can be tested independently - e.g., "Can be fully tested by [specific action] and delivers [specific value]"]
+**獨立測試方法**: [描述如何獨立測試此故事 - 例如：「透過執行 /plugin test 指令並觀察聊天視窗輸出即可驗證」]
 
-**Acceptance Scenarios**:
+**驗收場景 (Acceptance Scenarios)**:
 
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
-2. **Given** [initial state], **When** [action], **Then** [expected outcome]
-
----
-
-### User Story 2 - [Brief Title] (Priority: P2)
-
-[Describe this user journey in plain language]
-
-**Why this priority**: [Explain the value and why it has this priority level]
-
-**Independent Test**: [Describe how this can be tested independently]
-
-**Acceptance Scenarios**:
-
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
+1. **Given (已知)** [初始狀態], **When (當)** [執行動作], **Then (則)** [預期結果]
+2. **Given (已知)** [初始狀態], **When (當)** [執行動作], **Then (則)** [預期結果]
 
 ---
 
-### User Story 3 - [Brief Title] (Priority: P3)
+### 使用者故事 2 - [簡短標題] (優先級: P2)
 
-[Describe this user journey in plain language]
+[請用平實語言描述此使用者旅程]
 
-**Why this priority**: [Explain the value and why it has this priority level]
+**優先級原因**: [解釋為何此故事]
 
-**Independent Test**: [Describe how this can be tested independently]
+**獨立測試方法**: [描述如何獨立測試]
 
-**Acceptance Scenarios**:
+**驗收場景**:
 
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
+1. **Given** [初始狀態], **When** [動作], **Then** [預期結果]
 
 ---
 
-[Add more user stories as needed, each with an assigned priority]
+### 使用者故事 3 - [簡短標題] (優先級: P3)
 
-### Edge Cases
+[請用平實語言描述此使用者旅程]
+
+**優先級原因**: [解釋為何此故事]
+
+**獨立測試方法**: [描述如何獨立測試]
+
+**驗收場景**:
+
+1. **Given** [初始狀態], **When** [動作], **Then** [預期結果]
+
+---
+
+[根據需要新增更多使用者故事]
+
+### 邊際情況 (Edge Cases)
 
 <!--
-  ACTION REQUIRED: The content in this section represents placeholders.
-  Fill them out with the right edge cases.
+  需要採取行動：請填寫與此功能相關的邊際情況。
 -->
 
-- What happens when [boundary condition]?
-- How does system handle [error scenario]?
+- 當玩家離線時執行操作會發生什麼？
+- 當資料庫連線中斷時如何處理？
+- 當權限不足時的提示訊息？
 
-## Requirements *(mandatory)*
+## 指令與權限 (Commands & Permissions) *(必填)*
+
+<!--
+  定義此功能引入的新指令與對應權限節點。
+-->
+
+### 指令 (Syntax)
+
+- `/plugin <action>`: [描述]
+- `/plugin reload`: [描述] (通常為管理員專用)
+
+### 權限 (Permission Nodes)
+
+- `plugin.use`: 允許使用基本功能 (預設: true)
+- `plugin.admin`: 允許使用管理指令與重載 (預設: op)
+- `plugin.bypass`: 允許繞過某些限制 (預設: op)
+
+## 設定需求 (Configuration Requirements) *(必填)*
+
+<!--
+  定義需要在 config.yml 或 messages.yml 中暴露的可配置項目。
+-->
+
+- **功能開關**: [例如：enable-feature-x: true/false]
+- **數值參數**: [例如：cooldown-seconds: 60]
+- **訊息自訂**: [例如：message-no-permission: "&c你沒有權限！"]
+
+## 需求規格 (Requirements) *(必填)*
 
 <!--
   ACTION REQUIRED: The content in this section represents placeholders.

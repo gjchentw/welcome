@@ -8,7 +8,7 @@ description: "Task list template for feature implementation"
 **Input**: Design documents from `/specs/[###-feature-name]/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
+**測試**: 根據專案憲法，測試是 **強制性的**，並且必須在實作之前撰寫 (測試優先原則)。下面的範例包含了測試任務，應根據此原則進行規劃。
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
@@ -44,118 +44,92 @@ description: "Task list template for feature implementation"
   ============================================================================
 -->
 
-## Phase 1: Setup (Shared Infrastructure)
+## 第一階段：設置 (Setup) - 共用基礎設施
 
-**Purpose**: Project initialization and basic structure
+**目的**: 初始化專案結構與基礎設定 (plugin.yml, Maven/Gradle)
 
-- [ ] T001 Create project structure per implementation plan
-- [ ] T002 Initialize [language] project with [framework] dependencies
-- [ ] T003 [P] Configure linting and formatting tools
-
----
-
-## Phase 2: Foundational (Blocking Prerequisites)
-
-**Purpose**: Core infrastructure that MUST be complete before ANY user story can be implemented
-
-**⚠️ CRITICAL**: No user story work can begin until this phase is complete
-
-Examples of foundational tasks (adjust based on your project):
-
-- [ ] T004 Setup database schema and migrations framework
-- [ ] T005 [P] Implement authentication/authorization framework
-- [ ] T006 [P] Setup API routing and middleware structure
-- [ ] T007 Create base models/entities that all stories depend on
-- [ ] T008 Configure error handling and logging infrastructure
-- [ ] T009 Setup environment configuration management
-
-**Checkpoint**: Foundation ready - user story implementation can now begin in parallel
+- [ ] T000 建立 `LICENSE` 檔案 (採用 MIT License)
+- [ ] T000b 建立基礎 `README.md` (含專案目的、開發環境、安裝配置)
+- [ ] T000c 設定 GitHub Actions Workflow (Push -> Nightly-${hash}, Tag -> Release)
+- [ ] T001 建立專案結構 (src/main/java, src/main/resources)
+- [ ] T002 初始化 [Maven/Gradle] 專案 (使用 JDK 25) 並加入 Spigot/Paper API 依賴
+- [ ] T003 [P] 設定 `plugin.yml` (main class, version, api-version)
+- [ ] T004 [P] 設定 checkstyle/spotless 程式碼風格工具
 
 ---
 
-## Phase 3: User Story 1 - [Title] (Priority: P1) 🎯 MVP
+## 第二階段：基礎建設 (Foundational) - 必要前置作業
 
-**Goal**: [Brief description of what this story delivers]
+**目的**: 核心基礎建設，所有功能都依賴此階段 (Config, Database, Utils)
 
-**Independent Test**: [How to verify this story works on its own]
+**⚠️ 關鍵**: 在此階段完成前，無法開始實作具體功能
 
-### Tests for User Story 1 (OPTIONAL - only if tests requested) ⚠️
+- [ ] T005 實作 `ConfigManager` 以讀取 config.yml 與 messages.yml
+- [ ] T006 [P] 建立 `MessageUtils` 支援 Hex Color 與 Placeholders
+- [ ] T007 [P] 設定資料庫連線池 (HikariCP) 或本地存檔機制 (JSON/YAML)
+- [ ] T008 建立基礎 `CommandExecutor` 抽象類別 (包含權限檢查與錯誤處理)
+- [ ] T009 設定日誌 (Logging) 與除錯模式 (Debug Mode) 開關
 
-> **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
-
-- [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test_[name].py
-
-### Implementation for User Story 1
-
-- [ ] T012 [P] [US1] Create [Entity1] model in src/models/[entity1].py
-- [ ] T013 [P] [US1] Create [Entity2] model in src/models/[entity2].py
-- [ ] T014 [US1] Implement [Service] in src/services/[service].py (depends on T012, T013)
-- [ ] T015 [US1] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T016 [US1] Add validation and error handling
-- [ ] T017 [US1] Add logging for user story 1 operations
-
-**Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
+**檢查點**: 基礎設施就緒 - 可開始並行開發各個功能模組
 
 ---
 
-## Phase 4: User Story 2 - [Title] (Priority: P2)
+## 第三階段：使用者故事 1 - [標題] (優先級: P1) 🎯 MVP
 
-**Goal**: [Brief description of what this story delivers]
+**目標**: [簡述此故事交付的價值]
 
-**Independent Test**: [How to verify this story works on its own]
+**獨立測試**: [如何驗證此功能 (例如：輸入指令 /test)]
 
-### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
+### 測試 (Test-First) ⚠️
 
-- [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/test_[name].py
+> **注意：請先撰寫 Mock Bukkit 測試或單元測試**
 
-### Implementation for User Story 2
+- [ ] T010 [P] [US1] 撰寫業務邏輯的單元測試 (不依賴 Bukkit API)
+- [ ] T011 [P] [US1] 撰寫指令輸入輸出的整合測試
 
-- [ ] T020 [P] [US2] Create [Entity] model in src/models/[entity].py
-- [ ] T021 [US2] Implement [Service] in src/services/[service].py
-- [ ] T022 [US2] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T023 [US2] Integrate with User Story 1 components (if needed)
+### 實作 (Implementation)
 
-**Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
+- [ ] T012 [P] [US1] 在 `plugin.yml` 註冊指令與權限節點
+- [ ] T013 [P] [US1] 建立資料模型 (POJO) 與 DAO 層
+- [ ] T014 [US1] 實作 `CommandExecutor` 處理指令邏輯 (依賴 T013)
+- [ ] T015 [US1] 實作 `Listener` 監聽相關遊戲事件 (如 PlayerJoinEvent)
+- [ ] T016 [US1] 在 `MainPlugin` 的 onEnable 註冊指令與監聽器
+- [ ] T017 [US1] 加入設定檔參數與訊息文字至 `config.yml`
 
----
-
-## Phase 5: User Story 3 - [Title] (Priority: P3)
-
-**Goal**: [Brief description of what this story delivers]
-
-**Independent Test**: [How to verify this story works on its own]
-
-### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
-
-- [ ] T024 [P] [US3] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T025 [P] [US3] Integration test for [user journey] in tests/integration/test_[name].py
-
-### Implementation for User Story 3
-
-- [ ] T026 [P] [US3] Create [Entity] model in src/models/[entity].py
-- [ ] T027 [US3] Implement [Service] in src/services/[service].py
-- [ ] T028 [US3] Implement [endpoint/feature] in src/[location]/[file].py
-
-**Checkpoint**: All user stories should now be independently functional
+**檢查點**: 使用者故事 1 應可獨立運作並通過測試
 
 ---
 
-[Add more user story phases as needed, following the same pattern]
+## 第四階段：使用者故事 2 - [標題] (優先級: P2)
+
+**目標**: [簡述此故事交付的價值]
+
+**獨立測試**: [如何驗證此功能]
+
+### 測試 (Test-First) ⚠️
+
+- [ ] T018 [P] [US2] 撰寫相關邏輯測試
+
+### 實作 (Implementation)
+
+- [ ] T019 [P] [US2] 在 `plugin.yml` 註冊新指令與權限
+- [ ] T020 [US2] 實作相關 `Manager` 或 `Service` (非同步處理)
+- [ ] T021 [US2] 實作指令或事件監聽器
+- [ ] T022 [US2] 整合 US1 的組件 (如需)
+
+**檢查點**: US1 與 US2 皆可獨立運作
 
 ---
 
-## Phase N: Polish & Cross-Cutting Concerns
+## 第 N 階段：打磨與優化 (Polish)
 
-**Purpose**: Improvements that affect multiple user stories
+**目的**: 跨功能的優化與檢查
 
-- [ ] TXXX [P] Documentation updates in docs/
-- [ ] TXXX Code cleanup and refactoring
-- [ ] TXXX Performance optimization across all stories
-- [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
-- [ ] TXXX Security hardening
-- [ ] TXXX Run quickstart.md validation
+- [ ] TXXX [P] 完善 javadoc 與 README 文件
+- [ ] TXXX 確保 `onDisable` 正確釋放資源 (無 Memory Leak)
+- [ ] TXXX 測試 `/plugin reload` 指令是否正常重載設定
+- [ ] TXXX 優化資料庫查詢 (確保為 Async)
+- [ ] TXXX 檢查權限節點是否覆蓋所有敏感操作
 
 ---
 
