@@ -47,7 +47,7 @@ public class WelcomePlugin extends JavaPlugin {
 
         // Register Listeners
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this, playerCacheManager, languageManager), this);
-        getServer().getPluginManager().registerEvents(new LoginAttemptListener(this, playerCacheManager), this);
+        getServer().getPluginManager().registerEvents(new LoginAttemptListener(playerCacheManager), this);
 
         // Register Command
         if (getCommand("welcome") != null) {

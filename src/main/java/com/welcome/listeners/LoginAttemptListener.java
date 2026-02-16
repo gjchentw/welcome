@@ -17,11 +17,9 @@ import java.util.UUID;
  */
 public class LoginAttemptListener implements Listener {
 
-    private final JavaPlugin plugin;
     private final PlayerCacheManager playerCacheManager;
 
-    public LoginAttemptListener(JavaPlugin plugin, PlayerCacheManager playerCacheManager) {
-        this.plugin = plugin;
+    public LoginAttemptListener(PlayerCacheManager playerCacheManager) {
         this.playerCacheManager = playerCacheManager;
     }
 
@@ -35,7 +33,7 @@ public class LoginAttemptListener implements Listener {
 
         if (!WhitelistUtils.isWhitelisted(offlinePlayer)) {
             // Add to cache even if they are about to be rejected by the whitelist
-            playerCacheManager.addPlayer(name);
+            playerCacheManager.addPlayer(name, uuid);
         }
     }
 }
