@@ -1,0 +1,23 @@
+# Welcome Plugin Messages (ja_JP)
+# General Messages
+no-permission: "&cこのコマンドを実行する権限がありません。"
+only-players: "&cこのコマンドはプレイヤーのみが実行できます。"
+reload-success: "&a設定と言語ファイルが正常に再読み込みされました。"
+help-message:
+  - "&b--- &6Welcome ヘルプ &b---"
+  - "&e/welcome <プレイヤー> &7- プレイヤーをホワイトリストに追加するための投票をします。"
+  - "&e/welcome help &7- このヘルプメッセージを表示します。"
+  - "&e/welcome reload &7- 設定と言語ファイルを再読み込みします。"
+
+# Voting Messages
+welcome-success: "&f{target}&a に投票しました。(&e{current_votes}&7/&e{required_votes}&a)"
+target-invalid: "&cプレイヤー &f{target} &cはこのサーバーに参加したことがありません。"
+target-already-whitelisted: "&cプレイヤー &f{target} &cは既にホワイトリストに登録されています。"
+already-voted: "&c既に &f{target}&c に投票しています。"
+
+# Join Messages
+welcome-message: "&aおかえりなさい、&f%player%&aさん！"
+whitelist-join: "&eホワイトリストプレイヤー &f%player% &eがサーバーに参加しました。"
+
+# Broadcasts
+broadcast-message: "&eプレイヤー &f{target} &eがホワイトリストに歓迎されました！"

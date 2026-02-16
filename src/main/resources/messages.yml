@@ -1,7 +1,0 @@
-# Welcome Plugin Messages
-# Use & for colors
-
-welcome-message: "&a歡迎回來, &f%player%&a!"
-whitelist-join: "&e白名單玩家 &f%player% &e加入了伺服器。"
-no-permission: "&c你沒有權限執行此指令。"
-reload-success: "&a設定檔已成功重載。"

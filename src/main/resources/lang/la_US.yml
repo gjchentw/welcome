@@ -1,0 +1,23 @@
+# Welcome Plugin Messages (la_US - American Latin)
+# General Messages
+no-permission: "&cNon habes potestatem hunc imperium exsequendi."
+only-players: "&cSolum lusores hunc imperium exsequi possunt."
+reload-success: "&aConfiguratio et linguae prospere refectae sunt."
+help-message:
+  - "&b--- &6Welcome Auxilium &b---"
+  - "&e/welcome <lusor> &7- Vota pro lusore ut albo indice addatur."
+  - "&e/welcome help &7- Hoc nuntium auxilii ostende."
+  - "&e/welcome reload &7- Config et linguas refice."
+
+# Voting Messages
+welcome-success: "&aVotum dedisti pro &f{target}&a. (&e{current_votes}&7/&e{required_votes}&a)"
+target-invalid: "&cLusor &f{target} &cnon hunc server visitavit."
+target-already-whitelisted: "&cLusor &f{target} &ciam in albo indice est."
+already-voted: "&cIam votum dedisti pro &f{target}&c."
+
+# Join Messages
+welcome-message: "&aSalve rursus, &f%player%&a!"
+whitelist-join: "&eLusor albi indicis &f%player% &eserver intravit."
+
+# Broadcasts
+broadcast-message: "&eLusor &f{target} &ein album indicem acceptus est!"

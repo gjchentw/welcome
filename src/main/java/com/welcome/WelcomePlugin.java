@@ -3,6 +3,7 @@ package com.welcome;
 import com.welcome.commands.WelcomeCommand;
 import com.welcome.configuration.ConfigManager;
 import com.welcome.listeners.PlayerJoinListener;
+import com.welcome.managers.LanguageManager;
 import com.welcome.managers.PlayerCacheManager;
 import com.welcome.managers.VoteManager;
 import org.bukkit.Bukkit;
@@ -15,6 +16,7 @@ public class WelcomePlugin extends JavaPlugin {
     private ConfigManager configManager;
     private VoteManager voteManager;
     private PlayerCacheManager playerCacheManager;
+    private LanguageManager languageManager;
 
     @Override
     public void onLoad() {
@@ -35,16 +37,19 @@ public class WelcomePlugin extends JavaPlugin {
         // Initialize Config Manager
         this.configManager = new ConfigManager(this);
         
+        // Initialize Language Manager
+        this.languageManager = new LanguageManager(this, configManager);
+        
         // Initialize Managers
         this.voteManager = new VoteManager();
         this.playerCacheManager = new PlayerCacheManager(this, configManager);
 
         // Register Listeners
-        getServer().getPluginManager().registerEvents(new PlayerJoinListener(this, playerCacheManager), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(this, playerCacheManager, languageManager), this);
 
         // Register Command
         if (getCommand("welcome") != null) {
-            getCommand("welcome").setExecutor(new WelcomeCommand(this, configManager, voteManager, playerCacheManager));
+            getCommand("welcome").setExecutor(new WelcomeCommand(this, configManager, voteManager, playerCacheManager, languageManager));
         }
 
         getLogger().info("Welcome plugin has been enabled!");
@@ -60,5 +65,9 @@ public class WelcomePlugin extends JavaPlugin {
             voteManager.clearAll();
         }
         getLogger().info("Welcome plugin has been disabled!");
+    }
+
+    public LanguageManager getLanguageManager() {
+        return languageManager;
     }
 }

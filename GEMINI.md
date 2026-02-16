@@ -24,6 +24,7 @@ tests/
 ## Recent Changes
 
 - 001-spigot-init: Added
+- 012-i18n-support: Internationalization support added with LanguageManager and multi-language READMEs.
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->
