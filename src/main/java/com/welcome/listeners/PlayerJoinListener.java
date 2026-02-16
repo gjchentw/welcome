@@ -46,7 +46,7 @@ public class PlayerJoinListener implements Listener {
             // FR-003: Check if player is whitelisted
             if (!WhitelistUtils.isWhitelisted(player)) {
                 // FR-004: Add to cache
-                playerCacheManager.addPlayer(player.getName());
+                playerCacheManager.addPlayer(player.getName(), player.getUniqueId());
             }
         });
     }

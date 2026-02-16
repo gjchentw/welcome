@@ -82,11 +82,12 @@ public class WelcomeCommandTest {
         voter.addAttachment(plugin, "welcome.use", true);
         
         String targetName = "UnseenPlayer";
+        java.util.UUID targetUuid = java.util.UUID.randomUUID();
         // Ensure they haven't played before
         assertFalse(server.getOfflinePlayer(targetName).hasPlayedBefore());
         
         // Add to cache manually (simulating LoginAttemptListener)
-        plugin.getPlayerCacheManager().addPlayer(targetName);
+        plugin.getPlayerCacheManager().addPlayer(targetName, targetUuid);
         
         // This should now be valid even if they haven't played before
         assertTrue(server.dispatchCommand(voter, "welcome " + targetName));

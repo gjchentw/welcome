@@ -27,9 +27,8 @@ public class LoginAttemptListenerTest {
     @BeforeEach
     public void setUp() {
         MockBukkit.mock();
-        plugin = mock(JavaPlugin.class);
         cacheManager = mock(PlayerCacheManager.class);
-        listener = new LoginAttemptListener(plugin, cacheManager);
+        listener = new LoginAttemptListener(cacheManager);
     }
 
     @AfterEach
@@ -53,7 +52,7 @@ public class LoginAttemptListenerTest {
             
             listener.onPlayerPreLogin(event);
             
-            verify(cacheManager).addPlayer(name);
+            verify(cacheManager).addPlayer(name, uuid);
         }
     }
 
@@ -73,7 +72,7 @@ public class LoginAttemptListenerTest {
             
             listener.onPlayerPreLogin(event);
             
-            verify(cacheManager, never()).addPlayer(anyString());
+            verify(cacheManager, never()).addPlayer(anyString(), any(UUID.class));
         }
     }
 }

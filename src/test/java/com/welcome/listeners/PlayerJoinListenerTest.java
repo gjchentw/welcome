@@ -43,6 +43,7 @@ public class PlayerJoinListenerTest {
     public void testOnPlayerJoin() {
         Player player = mock(Player.class);
         when(player.getName()).thenReturn("NewPlayer");
+        when(player.getUniqueId()).thenReturn(java.util.UUID.randomUUID());
         PlayerJoinEvent event = new PlayerJoinEvent(player, "Welcome NewPlayer");
 
         try (MockedStatic<WhitelistUtils> whitelistUtils = mockStatic(WhitelistUtils.class)) {
@@ -57,7 +58,7 @@ public class PlayerJoinListenerTest {
             runnableCaptor.getValue().run();
             
             // Verify that addPlayer was called
-            verify(cacheManager).addPlayer("NewPlayer");
+            verify(cacheManager).addPlayer(eq("NewPlayer"), any(java.util.UUID.class));
         }
     }
 
@@ -78,7 +79,7 @@ public class PlayerJoinListenerTest {
             runnableCaptor.getValue().run();
             
             // Verify that addPlayer was NOT called
-            verify(cacheManager, never()).addPlayer(anyString());
+            verify(cacheManager, never()).addPlayer(anyString(), any(java.util.UUID.class));
         }
     }
 }
