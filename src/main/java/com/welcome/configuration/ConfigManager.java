@@ -18,8 +18,6 @@ public class ConfigManager {
 
     private final JavaPlugin plugin;
     private FileConfiguration config;
-    private FileConfiguration messages;
-    private File messagesFile;
 
     public ConfigManager(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -31,23 +29,6 @@ public class ConfigManager {
         plugin.saveDefaultConfig();
         plugin.reloadConfig();
         this.config = plugin.getConfig();
-
-        // Load messages.yml
-        if (messagesFile == null) {
-            messagesFile = new File(plugin.getDataFolder(), "messages.yml");
-        }
-        if (!messagesFile.exists()) {
-            plugin.saveResource("messages.yml", false);
-        }
-        messages = YamlConfiguration.loadConfiguration(messagesFile);
-        
-        // Load default messages from jar if missing
-        try (InputStreamReader reader = new InputStreamReader(plugin.getResource("messages.yml"), StandardCharsets.UTF_8)) {
-            YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(reader);
-            messages.setDefaults(defConfig);
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.SEVERE, "Could not load default messages.yml", e);
-        }
     }
 
     public void reloadConfig() {
@@ -62,6 +43,10 @@ public class ConfigManager {
         return config.getString("prefix", "&8[&bWelcome&8] ");
     }
 
+    public String getLanguage() {
+        return config.getString("language", "en_US");
+    }
+
     public int getAutocompleteMaxPlayers() {
         int max = config.getInt("autocomplete.max-players", 100);
         if (max <= 0) {
@@ -69,14 +54,6 @@ public class ConfigManager {
             return 100;
         }
         return max;
-    }
-
-    public String getMessage(String key) {
-        return messages.getString(key, "Message not found: " + key);
-    }
-
-    public List<String> getMessageList(String key) {
-        return messages.getStringList(key);
     }
 
     public boolean isCheckWhitelist() {

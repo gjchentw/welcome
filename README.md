@@ -2,38 +2,40 @@
 
 [![Build and Release](https://github.com/gjchentw/Welcome/actions/workflows/ci.yml/badge.svg)](https://github.com/gjchentw/Welcome/actions/workflows/ci.yml)
 
-**Welcome** 是一個為現代 Minecraft 伺服器設計的 Spigot/Paper 插件，旨在實現「社區驅動」的白名單管理機制。透過投票系統，讓線上玩家共同決定新成員的加入，並透過自動化 CI/CD 確保程式碼品質與發布可信度。
+[繁體中文](README_zh_TW.md)
+
+**Welcome** is a Spigot/Paper plugin designed for modern Minecraft servers, aiming to implement a "community-driven" whitelist management mechanism. Through a voting system, online players collectively decide on the admission of new members, with automated CI/CD ensuring code quality and release reliability.
 
 ---
 
-## 專案目的 (Project Purpose)
+## Project Purpose
 
-在許多半開放式的伺服器中，白名單審核往往耗費管理員大量時間。**Welcome** 改變了這一點：
-- **投票白名單**: 線上玩家可以對新玩家進行「歡迎 (投票)」。
-- **即時自動補全**: 當非白名單玩家登入時，系統會自動且即時地將其加入指令補全清單，無需等待。
-- **自動化管理**: 當歡迎比例達到設定門檻（複用伺服器睡眠比例 `playersSleepingPercentage`），系統自動將目標玩家加入白名單。
-- **無痛遷移**: 從舊版本 (Welcome) 升級時，系統會自動遷移資料夾內容（v1.1.0+）。
-
----
-
-## 開發流程 (Development Workflow)
-
-本專案嚴格採用 **Spec-Kit** 進行 **規格驅動開發 (Specification-Driven Development, SDD)**，確保每一項功能從設計到實作皆有跡可循：
-
-1.  **規格制定 (`/speckit.specify`)**: 定義使用者故事與驗收標準。
-2.  **技術計畫 (`/speckit.plan`)**: 進行技術研究、架構設計與憲法檢查。
-3.  **實作執行 (`/speckit.implement`)**: 根據任務清單進行 TDD 實作。
+In many semi-open servers, whitelist review often consumes a lot of administrators' time. **Welcome** changes this:
+- **Voting Whitelist**: Online players can cast a "welcome (vote)" for new players.
+- **Real-time Autocomplete**: When a non-whitelisted player logs in, the system automatically and instantly adds them to the command completion list.
+- **Automated Management**: When the welcome ratio reaches the set threshold (reusing the server's `playersSleepingPercentage`), the system automatically adds the target player to the whitelist.
+- **Seamless Migration**: When upgrading from older versions, the system automatically migrates folder contents (v1.1.0+).
 
 ---
 
-## 開發環境 (Development Environment)
+## Development Workflow
 
-- **JDK**: Java 25 (最低需求)
+This project strictly adopts **Spec-Kit** for **Specification-Driven Development (SDD)**, ensuring every feature is traceable from design to implementation:
+
+1.  **Specification (`/speckit.specify`)**: Define user stories and acceptance criteria.
+2.  **Technical Plan (`/speckit.plan`)**: Conduct technical research, architectural design, and constitution checks.
+3.  **Implementation (`/speckit.implement`)**: Perform TDD implementation according to the task list.
+
+---
+
+## Development Environment
+
+- **JDK**: Java 25 (Minimum requirement)
 - **Build System**: Gradle (Groovy DSL)
-- **API**: Paper API 1.21.4 (向下相容 Spigot)
+- **API**: Paper API 1.21.4 (Backwards compatible with Spigot)
 - **Testing**: JUnit 5 + MockBukkit + Mockito
 
-### 本地建置
+### Local Build
 ```bash
 git clone https://github.com/gjchentw/Welcome.git
 cd welcome
@@ -42,50 +44,53 @@ cd welcome
 
 ---
 
-## 安裝配置 (Installation & Configuration)
+## Installation & Configuration
 
-1.  從 [Releases](https://github.com/gjchentw/Welcome/releases) 下載最新版本的 JAR。
-2.  放入伺服器的 `plugins/` 資料夾。
-3.  重新啟動伺服器以生成預設設定檔。
+1.  Download the latest version JAR from [Releases](https://github.com/gjchentw/Welcome/releases).
+2.  Place it into the server's `plugins/` folder.
+3.  Restart the server to generate default configuration files.
 
-### 版本遷移說明 (v1.1.0+)
-如果您是從舊版本（名稱為 `Welcome` 的時期）升級，插件在啟動時會自動偵測舊有的 `/plugins/Welcome/` 目錄，並將其更名為 `/plugins/Welcome/`。您不需要手動移動任何設定檔。
+### Migration Notes (v1.1.0+)
+If you are upgrading from an older version, the plugin will automatically detect the old directory and rename it. You don't need to move any config files manually.
 
-### 關鍵配置
+### Key Configuration
 
 #### `config.yml`
 ```yaml
-# 是否檢查目標玩家不在白名單中
+# Whether to check if target player is already whitelisted
 check-whitelist: true
-# 成功加入後是否全服公告
+# Whether to broadcast a message after successful whitelisting
 broadcast-on-whitelist: true
-# 自動補全設定
+# Language to use (en_US, zh_TW, zh_CN, ja_JP, la_US)
+language: en_US
+# Autocomplete settings
 autocomplete:
   max-players: 100
 ```
 
-#### `messages.yml`
-所有系統訊息（包含歡迎成功、權限不足等）皆支援顏色代碼與 Hex Color (#RRGGBB)。
+#### Localization (`lang/` folder)
+Messages are now managed by individual language files in the `lang/` directory.
 
 ---
 
-## 指令使用 (Usage)
+## Usage
 
-| 指令 | 權限節點 | 說明 |
+| Command | Permission | Description |
 | :--- | :--- | :--- |
-| `/welcome <player>` | `welcome.use` | 對指定玩家投下一張歡迎票 (支援玩家名稱自動補全) |
-| `/welcome help` | `welcome.use` | 顯示指令幫助 |
+| `/welcome <player>` | `welcome.use` | Cast a welcome vote for a specific player (supports autocomplete) |
+| `/welcome help` | `welcome.use` | Show command help |
+| `/welcome reload` | `welcome.admin` | Reload configuration and language files |
 
 ---
 
-## 品質與信任 (Trust & Quality)
+## Trust & Quality
 
-- **自動化測試**: 核心邏輯（如投票計算、比例檢查、快取過濾、資料遷移）皆由 JUnit 5 覆蓋。
-- **效能保證**: 自動補全回應時間保證在 100ms 內，且採用非同步快取不影響伺服器 TPS。
-- **持續整合**: 使用 GitHub Actions 在每次 Push 時執行測試，確保 `main` 分支永遠處於可發布狀態。
+- **Automated Testing**: Core logic (voting calculation, ratio checking, cache filtering, data migration) is covered by JUnit 5.
+- **Performance Guarantee**: Autocomplete response time is guaranteed within 100ms, using asynchronous caching to avoid affecting server TPS.
+- **Continuous Integration**: Uses GitHub Actions to run tests on every Push, ensuring the `main` branch is always in a releasable state.
 
 ---
 
-## 授權 (License)
+## License
 
-本專案採用 [MIT License](LICENSE) 授權。
+This project is licensed under the [MIT License](LICENSE).

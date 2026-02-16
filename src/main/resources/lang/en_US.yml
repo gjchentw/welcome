@@ -1,0 +1,23 @@
+# Welcome Plugin Messages (en_US)
+# General Messages
+no-permission: "&cYou don't have permission to execute this command."
+only-players: "&cOnly players can execute this command."
+reload-success: "&aConfiguration and languages reloaded successfully."
+help-message:
+  - "&b--- &6Welcome Help &b---"
+  - "&e/welcome <player> &7- Vote for a player to join the whitelist."
+  - "&e/welcome help &7- Show this help message."
+  - "&e/welcome reload &7- Reload config and languages."
+
+# Voting Messages
+welcome-success: "&aYou have voted for &f{target}&a. (&e{current_votes}&7/&e{required_votes}&a)"
+target-invalid: "&cPlayer &f{target} &chas not visited the server."
+target-already-whitelisted: "&cPlayer &f{target} &cis already on the whitelist."
+already-voted: "&cYou have already voted for &f{target}&c."
+
+# Join Messages
+welcome-message: "&aWelcome back, &f%player%&a!"
+whitelist-join: "&eWhitelisted player &f%player% &ejoined the server."
+
+# Broadcasts
+broadcast-message: "&ePlayer &f{target} &ehas been welcomed to the whitelist!"

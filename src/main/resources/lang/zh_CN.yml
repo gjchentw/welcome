@@ -1,0 +1,23 @@
+# Welcome Plugin Messages (zh_CN)
+# General Messages
+no-permission: "&c你没有权限执行此指令。"
+only-players: "&c只有玩家可以执行此指令。"
+reload-success: "&a配置文件与語言包已成功重载。"
+help-message:
+  - "&b--- &6Welcome 帮助 &b---"
+  - "&e/welcome <玩家> &7- 投票欢迎玩家加入白名单。"
+  - "&e/welcome help &7- 显示此帮助信息。"
+  - "&e/welcome reload &7- 重载设置與语言。"
+
+# Voting Messages
+welcome-success: "&a已为 &f{target}&a 投下一张欢迎票。(&e{current_votes}&7/&e{required_votes}&a)"
+target-invalid: "&c玩家 &f{target} &c尚未访问过此服务器。"
+target-already-whitelisted: "&c玩家 &f{target} &c已经在白名单中了。"
+already-voted: "&c你已经为 &f{target}&c 投过票了。"
+
+# Join Messages
+welcome-message: "&a欢迎回来, &f%player%&a!"
+whitelist-join: "&e白名单玩家 &f%player% &e加入了服务器。"
+
+# Broadcasts
+broadcast-message: "&e玩家 &f{target} &e已被欢迎加入白名单！"

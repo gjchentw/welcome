@@ -1,6 +1,7 @@
 package com.welcome.commands;
 
 import com.welcome.configuration.ConfigManager;
+import com.welcome.managers.LanguageManager;
 import com.welcome.managers.PlayerCacheManager;
 import com.welcome.managers.VoteManager;
 import com.welcome.utils.MessageUtils;
@@ -27,18 +28,24 @@ public class WelcomeCommand implements CommandExecutor, TabCompleter {
     private final ConfigManager configManager;
     private final VoteManager voteManager;
     private final PlayerCacheManager playerCacheManager;
+    private final LanguageManager languageManager;
 
-    public WelcomeCommand(JavaPlugin plugin, ConfigManager configManager, VoteManager voteManager, PlayerCacheManager playerCacheManager) {
+    public WelcomeCommand(JavaPlugin plugin, ConfigManager configManager, VoteManager voteManager, PlayerCacheManager playerCacheManager, LanguageManager languageManager) {
         this.plugin = plugin;
         this.configManager = configManager;
         this.voteManager = voteManager;
         this.playerCacheManager = playerCacheManager;
+        this.languageManager = languageManager;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
+        if (args.length == 0 || (args.length == 1 && args[0].equalsIgnoreCase("help"))) {
             return handleHelp(sender);
+        }
+        
+        if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
+            return handleReload(sender);
         }
 
         return handleVote(sender, args[0]);
@@ -47,12 +54,18 @@ public class WelcomeCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length == 1) {
-            if (!sender.hasPermission("welcome.use")) {
-                return Collections.emptyList();
+            List<String> completions = new ArrayList<>();
+            List<String> options = new ArrayList<>();
+            
+            if (sender.hasPermission("welcome.use")) {
+                options.addAll(playerCacheManager.getCachedNames());
+                options.add("help");
+            }
+            if (sender.hasPermission("welcome.admin")) {
+                options.add("reload");
             }
             
-            List<String> completions = new ArrayList<>();
-            StringUtil.copyPartialMatches(args[0], playerCacheManager.getCachedNames(), completions);
+            StringUtil.copyPartialMatches(args[0], options, completions);
             Collections.sort(completions);
             return completions;
         }
@@ -60,48 +73,58 @@ public class WelcomeCommand implements CommandExecutor, TabCompleter {
     }
 
     private boolean handleHelp(CommandSender sender) {
-        if (!sender.hasPermission("welcome.admin") && !sender.hasPermission("welcome.use")) {
-             sender.sendMessage(MessageUtils.colorize(configManager.getPrefix() + configManager.getMessage("no-permission")));
+        if (!sender.hasPermission("welcome.use")) {
+             sender.sendMessage(MessageUtils.colorize(configManager.getPrefix() + languageManager.getMessage("no-permission")));
              return true;
         }
-        configManager.getMessageList("help-message").forEach(line ->
+        languageManager.getMessageList("help-message").forEach(line ->
             sender.sendMessage(MessageUtils.colorize(line))
         );
         return true;
     }
 
+    private boolean handleReload(CommandSender sender) {
+        if (!sender.hasPermission("welcome.admin")) {
+            sender.sendMessage(MessageUtils.colorize(configManager.getPrefix() + languageManager.getMessage("no-permission")));
+            return true;
+        }
+        
+        configManager.reloadConfig();
+        languageManager.reload();
+        sender.sendMessage(MessageUtils.colorize(configManager.getPrefix() + languageManager.getMessage("reload-success")));
+        return true;
+    }
+
     private boolean handleVote(CommandSender sender, String targetName) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(MessageUtils.colorize("&cOnly players can vote."));
+            sender.sendMessage(MessageUtils.colorize(configManager.getPrefix() + languageManager.getMessage("only-players")));
             return true;
         }
         Player player = (Player) sender;
 
         if (!player.hasPermission("welcome.use")) {
-            player.sendMessage(MessageUtils.colorize(configManager.getPrefix() + configManager.getMessage("no-permission")));
+            player.sendMessage(MessageUtils.colorize(configManager.getPrefix() + languageManager.getMessage("no-permission")));
             return true;
         }
 
         if (configManager.isCheckWhitelist() && !WhitelistUtils.isWhitelistEnabled()) {
-            player.sendMessage(MessageUtils.colorize(configManager.getPrefix() + configManager.getMessage("whitelist-disabled")));
+            player.sendMessage(MessageUtils.colorize(configManager.getPrefix() + languageManager.getMessage("whitelist-disabled")));
             return true;
         }
 
         OfflinePlayer target = Bukkit.getOfflinePlayer(targetName);
-        // Updated check: allow voting for players who might not have played before if they are online
-        // but typically we use cached names.
         if (!target.hasPlayedBefore() && !target.isOnline()) {
-            player.sendMessage(MessageUtils.colorize(configManager.getPrefix() + configManager.getMessage("target-invalid").replace("{target}", targetName)));
+            player.sendMessage(MessageUtils.colorize(configManager.getPrefix() + languageManager.getMessage("target-invalid").replace("{target}", targetName)));
             return true;
         }
 
         if (WhitelistUtils.isWhitelisted(target)) {
-            player.sendMessage(MessageUtils.colorize(configManager.getPrefix() + configManager.getMessage("target-already-whitelisted").replace("{target}", target.getName())));
+            player.sendMessage(MessageUtils.colorize(configManager.getPrefix() + languageManager.getMessage("target-already-whitelisted").replace("{target}", target.getName())));
             return true;
         }
 
         if (!voteManager.vote(target.getUniqueId(), player.getUniqueId())) {
-            player.sendMessage(MessageUtils.colorize(configManager.getPrefix() + configManager.getMessage("already-voted").replace("{target}", target.getName())));
+            player.sendMessage(MessageUtils.colorize(configManager.getPrefix() + languageManager.getMessage("already-voted").replace("{target}", target.getName())));
             return true;
         }
 
@@ -121,14 +144,14 @@ public class WelcomeCommand implements CommandExecutor, TabCompleter {
             playerCacheManager.removePlayer(target.getName());
             
             if (configManager.isBroadcastOnWhitelist()) {
-                String broadcast = configManager.getMessage("broadcast-message").replace("{target}", target.getName());
+                String broadcast = languageManager.getMessage("broadcast-message").replace("{target}", target.getName());
                 Bukkit.broadcastMessage(MessageUtils.colorize(configManager.getPrefix() + broadcast));
             }
         } 
         
         int votesNeeded = (int) Math.ceil((double) online * required / 100);
         
-        String msg = configManager.getMessage("welcome-success")
+        String msg = languageManager.getMessage("welcome-success")
                 .replace("{target}", target.getName())
                 .replace("{current_votes}", String.valueOf(votes))
                 .replace("{required_votes}", String.valueOf(votesNeeded));

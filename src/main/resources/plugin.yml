@@ -7,7 +7,7 @@ description: A welcome plugin for your server.
 
 commands:
   welcome:
-    description: 主要歡迎投票指令
+    description: Main welcome voting command
     usage: /welcome <player>
     permission: welcome.use
 

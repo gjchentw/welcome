@@ -1,5 +1,5 @@
 # Welcome Plugin Configuration
-# Version: 1.0.1
+# Version: 1.1.0
 
 # Debug mode for more verbose logging
 debug-mode: false
@@ -12,6 +12,9 @@ check-whitelist: true
 
 # Whether to broadcast a message when a whitelisted player joins
 broadcast-on-whitelist: true
+
+# The language to use for messages (en_US, zh_TW, zh_CN, ja_JP, la_US)
+language: en_US
 
 # Autocomplete settings
 autocomplete:

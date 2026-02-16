@@ -1,5 +1,6 @@
 package com.welcome.listeners;
 
+import com.welcome.managers.LanguageManager;
 import com.welcome.managers.PlayerCacheManager;
 import com.welcome.utils.WhitelistUtils;
 import org.bukkit.Server;
@@ -7,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
-import org.bukkit.scheduler.BukkitTask;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -19,6 +19,7 @@ public class PlayerJoinListenerTest {
 
     private PlayerJoinListener listener;
     private PlayerCacheManager cacheManager;
+    private LanguageManager languageManager;
     private JavaPlugin plugin;
     private Server server;
     private BukkitScheduler scheduler;
@@ -29,11 +30,13 @@ public class PlayerJoinListenerTest {
         server = mock(Server.class);
         scheduler = mock(BukkitScheduler.class);
         cacheManager = mock(PlayerCacheManager.class);
+        languageManager = mock(LanguageManager.class);
         
         when(plugin.getServer()).thenReturn(server);
         when(server.getScheduler()).thenReturn(scheduler);
+        when(languageManager.getMessage(anyString())).thenReturn("Some Message");
         
-        listener = new PlayerJoinListener(plugin, cacheManager);
+        listener = new PlayerJoinListener(plugin, cacheManager, languageManager);
     }
 
     @Test
