@@ -1,5 +1,5 @@
 name: Welcome
-version: '${version}'
+version: '1.0.1'
 main: com.welcome.WelcomePlugin
 api-version: 1.21
 authors: [YourName]

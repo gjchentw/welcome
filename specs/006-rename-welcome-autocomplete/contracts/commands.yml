@@ -1,0 +1,12 @@
+commands:
+  /welcome:
+    description: "對指定玩家投下一張歡迎票。"
+    usage: "/welcome <player>"
+    permission: "welcome.use"
+    tab-completer:
+      strategy: "MemoryCache"
+      logic: "AsyncRefresh"
+      filter: "LastPlayed < 3d && !Whitelisted"
+      sort: "Alphabetical"
+      limit: "config:autocomplete.max-players"
+      error-handling: "ClearOnFailure"

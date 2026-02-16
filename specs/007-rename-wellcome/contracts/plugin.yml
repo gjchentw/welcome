@@ -1,0 +1,12 @@
+commands:
+  welcome:
+    description: "主要歡迎投票指令"
+    usage: "/welcome <player>"
+    permission: "welcome.use"
+permissions:
+  welcome.use:
+    description: "允許使用 /welcome 指令"
+    default: true
+  welcome.admin:
+    description: "允許使用所有管理指令"
+    default: op
