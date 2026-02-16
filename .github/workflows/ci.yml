@@ -42,12 +42,12 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/') != true
         uses: actions/upload-artifact@v4
         with:
-          name: wellcome-nightly-${{ steps.slug.outputs.sha8 }}
-          path: build/libs/wellcome-*.jar
+          name: Welcome-nightly-${{ steps.slug.outputs.sha8 }}
+          path: build/libs/Welcome-*.jar
 
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: build/libs/wellcome-*.jar
+          files: build/libs/Welcome-*.jar
           generate_release_notes: true
