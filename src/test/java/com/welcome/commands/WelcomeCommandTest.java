@@ -75,4 +75,20 @@ public class WelcomeCommandTest {
         assertTrue(server.dispatchCommand(target, "welcome targetPlayer"));
         assertTrue(target.isWhitelisted(), "Target should be whitelisted after successful vote");
     }
+
+    @Test
+    public void testVoteForCachedPlayer() {
+        PlayerMock voter = server.addPlayer();
+        voter.addAttachment(plugin, "welcome.use", true);
+        
+        String targetName = "UnseenPlayer";
+        // Ensure they haven't played before
+        assertFalse(server.getOfflinePlayer(targetName).hasPlayedBefore());
+        
+        // Add to cache manually (simulating LoginAttemptListener)
+        plugin.getPlayerCacheManager().addPlayer(targetName);
+        
+        // This should now be valid even if they haven't played before
+        assertTrue(server.dispatchCommand(voter, "welcome " + targetName));
+    }
 }

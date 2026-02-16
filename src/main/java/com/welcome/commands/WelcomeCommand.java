@@ -113,7 +113,9 @@ public class WelcomeCommand implements CommandExecutor, TabCompleter {
         }
 
         OfflinePlayer target = Bukkit.getOfflinePlayer(targetName);
-        if (!target.hasPlayedBefore() && !target.isOnline()) {
+        boolean inCache = playerCacheManager.getCachedNames().contains(targetName);
+
+        if (!target.hasPlayedBefore() && !target.isOnline() && !inCache) {
             player.sendMessage(MessageUtils.colorize(configManager.getPrefix() + languageManager.getMessage("target-invalid").replace("{target}", targetName)));
             return true;
         }

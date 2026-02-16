@@ -2,6 +2,7 @@ package com.welcome;
 
 import com.welcome.commands.WelcomeCommand;
 import com.welcome.configuration.ConfigManager;
+import com.welcome.listeners.LoginAttemptListener;
 import com.welcome.listeners.PlayerJoinListener;
 import com.welcome.managers.LanguageManager;
 import com.welcome.managers.PlayerCacheManager;
@@ -46,6 +47,7 @@ public class WelcomePlugin extends JavaPlugin {
 
         // Register Listeners
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this, playerCacheManager, languageManager), this);
+        getServer().getPluginManager().registerEvents(new LoginAttemptListener(this, playerCacheManager), this);
 
         // Register Command
         if (getCommand("welcome") != null) {
@@ -69,5 +71,9 @@ public class WelcomePlugin extends JavaPlugin {
 
     public LanguageManager getLanguageManager() {
         return languageManager;
+    }
+
+    public PlayerCacheManager getPlayerCacheManager() {
+        return playerCacheManager;
     }
 }
