@@ -1,14 +1,19 @@
-# Wellcome Plugin Configuration
-# Version: 1.0.0
+# Welcome Plugin Configuration
+# Version: 1.0.1
 
 # Debug mode for more verbose logging
 debug-mode: false
 
 # Message prefix
-prefix: "&8[&bWellcome&8] "
+prefix: "&8[&bWelcome&8] "
 
 # Whether to check whitelist status
 check-whitelist: true
 
 # Whether to broadcast a message when a whitelisted player joins
 broadcast-on-whitelist: true
+
+# Autocomplete settings
+autocomplete:
+  # Maximum number of players to show in suggestions
+  max-players: 100

@@ -1,0 +1,22 @@
+# Event Contracts: Dynamic Cache Updates
+
+## 1. PlayerJoinListener
+- **監聽事件**: `org.bukkit.event.player.PlayerJoinEvent`
+- **優先級**: `MONITOR` (非同步處理，不攔截事件)
+- **邏輯**:
+  ```java
+  @EventHandler
+  public void onPlayerJoin(PlayerJoinEvent event) {
+      Player player = event.getPlayer();
+      Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+          if (!WhitelistUtils.isWhitelisted(player)) {
+              playerCacheManager.addPlayer(player.getName());
+          }
+      });
+  }
+  ```
+
+## 2. PlayerCacheManager API
+- `addPlayer(String name)`: 非同步更新快取清單。
+- `removePlayer(String name)`: 從快取中移除玩家（供白名單連動使用）。
+- `getCachedNames()`: 返回不可變清單供 TabComplete 使用。
